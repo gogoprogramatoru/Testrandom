@@ -1,0 +1,33 @@
+name: Construire Windows
+on: [push] # Se rulează automat când urci cod nou
+
+jobs:
+  build-windows:
+    runs-on: windows-latest # Îi cerem un PC cu Windows
+    
+    steps:
+    - name: 1. Descarcă codul sursă
+      uses: actions/checkout@v4
+
+    - name: 2. Instalează Qt pe server
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.5.3'
+        
+    - name: 3. Compilează aplicația (.exe)
+      run: |
+        mkdir build
+        cd build
+        cmake ..
+        cmake --build . --config Release
+        
+    - name: 4. Adaugă DLL-urile necesare (windeployqt)
+      run: |
+        cd build/Release
+        windeployqt VerificatorPar.exe
+        
+    - name: 5. Salvează aplicația finală ca arhivă
+      uses: actions/upload-artifact@v4
+      with:
+        name: Aplicatie-Verificator-Windows
+        path: build/Release/
