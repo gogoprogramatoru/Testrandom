@@ -1,8 +1,9 @@
 [Setup]
 ; Informații de bază despre aplicație
 AppName=Verificator Par
-AppVersion=1.0
-AppPublisher=Numele Tau (CEO)
+AppVersion=1.2
+SetupIconFile=logo.ico
+AppPublisher=Andrei Gogoseanu (CEO)
 ; Folderul default unde se va instala (ex: C:\Program Files\Verificator Par)
 DefaultDirName={autopf}\Verificator Par
 ; Numele fisierului final de setup

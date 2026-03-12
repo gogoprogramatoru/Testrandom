@@ -17,7 +17,17 @@ set(CMAKE_AUTORCC ON)
 find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
 # Spunem din ce fișiere este creată aplicația
-add_executable(VerificatorPar main.cpp)
+# Verificăm dacă compilăm pe Windows
+if(WIN32)
+    # Pe Windows, adăugăm și fișierul de resurse cu iconița
+    add_executable(VerificatorPar main.cpp logo.rc)
+else()
+    # Pe Mac/Linux, compilăm normal
+    add_executable(VerificatorPar main.cpp)
+endif()
+
+# Legăm aplicația de biblioteca Qt (rămâne neschimbat)
+target_link_libraries(VerificatorPar PRIVATE Qt6::Widgets)
 
 # Legăm aplicația ta de biblioteca vizuală Qt
 target_link_libraries(VerificatorPar PRIVATE Qt6::Widgets)
