@@ -1,9 +1,9 @@
-name: Construire Windows
-on: [push] # Se rulează automat când urci cod nou
+name: Construire Windows Installer
+on: [push]
 
 jobs:
   build-windows:
-    runs-on: windows-latest # Îi cerem un PC cu Windows
+    runs-on: windows-latest
     
     steps:
     - name: 1. Descarcă codul sursă
@@ -26,8 +26,16 @@ jobs:
         cd build/Release
         windeployqt VerificatorPar.exe
         
-    - name: 5. Salvează aplicația finală ca arhivă
+    - name: 5. Instalează Inno Setup pe serverul Windows
+      run: choco install innosetup
+        
+    - name: 6. Construiește Installer-ul (Setup.exe)
+      # Folosim calea completă către Inno Setup Compiler (iscc)
+      run: '"C:\Program Files (x86)\Inno Setup 6\iscc.exe" installer.iss'
+        
+    - name: 7. Salvează Installer-ul final
       uses: actions/upload-artifact@v4
       with:
-        name: Aplicatie-Verificator-Windows
-        path: build/Release/
+        name: VerificatorPar-Setup-Oficial
+        # Acum salvăm doar fișierul Setup.exe, nu tot folderul
+        path: Output/VerificatorPar_Setup.exe
