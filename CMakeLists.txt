@@ -20,7 +20,7 @@ find_package(Qt6 COMPONENTS Widgets REQUIRED)
 # Verificăm dacă compilăm pe Windows
 if(WIN32)
     # Pe Windows, adăugăm și fișierul de resurse cu iconița
-    add_executable(VerificatorPar main.cpp logo.rc)
+    add_executable(VerificatorPar WIN32 main.cpp logo.rc)
 else()
     # Pe Mac/Linux, compilăm normal
     add_executable(VerificatorPar main.cpp)
